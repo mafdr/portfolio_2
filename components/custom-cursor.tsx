@@ -5,17 +5,17 @@ import { useEffect, useRef } from 'react';
 /**
  * Custom Cursor
  *
- * - Dot pequeño que sigue al mouse de forma instantánea
- * - Círculo grande con lerp (suavizado, 0.15)
+ * - Arrow SVG (apunta a la izquierda) que sigue el mouse instantáneo
+ * - Círculo outline alrededor con lerp (suavizado, 0.15)
  * - States según el atributo `data-cursor` del elemento bajo el mouse:
- *    - 'hover' → círculo crece ligero, fondo translúcido
- *    - 'link'  → círculo crece, fondo lime con blend-difference (ideal para botones)
- *    - 'view'  → círculo gigante con label "View" (para project cards)
+ *    - 'hover' → cambio sutil del círculo
+ *    - 'link'  → círculo crece y se llena lime con blend-difference (botones)
+ *    - 'view'  → círculo gigante con label "View" + flecha oculta (cards)
  *
  * Solo se activa en desktop (hover + fine pointer) y respeta reduced-motion.
  */
 export function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement>(null);
+  const arrowRef = useRef<SVGSVGElement>(null);
   const circleRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
 
@@ -24,10 +24,10 @@ export function CustomCursor() {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (isTouch || reduced) return;
 
-    const dot = dotRef.current;
+    const arrow = arrowRef.current;
     const circle = circleRef.current;
     const label = labelRef.current;
-    if (!dot || !circle || !label) return;
+    if (!arrow || !circle || !label) return;
 
     document.documentElement.classList.add('has-custom-cursor');
 
@@ -41,20 +41,22 @@ export function CustomCursor() {
       mouse.y = e.clientY;
       if (!cursorVisible) {
         circle!.classList.remove('is-hidden');
+        arrow!.classList.remove('is-hidden');
         cursorVisible = true;
       }
     }
 
     function onMouseLeave() {
       circle!.classList.add('is-hidden');
+      arrow!.classList.add('is-hidden');
       cursorVisible = false;
     }
 
     function animate() {
-      // Dot: instantáneo
-      dot!.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%, -50%)`;
+      // Arrow: instantáneo. Mantenemos el scaleX(-1) para que apunte a la izquierda.
+      arrow!.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%, -50%) scaleX(-1)`;
 
-      // Círculo: lerp
+      // Círculo: lerp suavizado
       const lerp = 0.15;
       circlePos.x += (mouse.x - circlePos.x) * lerp;
       circlePos.y += (mouse.y - circlePos.y) * lerp;
@@ -64,25 +66,28 @@ export function CustomCursor() {
     }
     rafId = requestAnimationFrame(animate);
 
-    // Delegación de eventos: detectar [data-cursor] sin tener que añadir listener a cada uno
+    // Delegación: detectar [data-cursor] en todo el documento
     function onPointerOver(e: PointerEvent) {
       const target = (e.target as HTMLElement).closest('[data-cursor]');
       if (!target) return;
       const state = target.getAttribute('data-cursor');
       circle!.classList.remove('is-hover', 'is-link', 'is-view');
+      document.documentElement.classList.remove('cursor-state-hover', 'cursor-state-link', 'cursor-state-view');
       if (state === 'view') {
         const customLabel = target.getAttribute('data-cursor-label') || 'View';
         label!.textContent = customLabel;
       }
       circle!.classList.add(`is-${state}`);
+      document.documentElement.classList.add(`cursor-state-${state}`);
     }
 
     function onPointerOut(e: PointerEvent) {
       const target = (e.target as HTMLElement).closest('[data-cursor]');
       if (!target) return;
       const related = (e.relatedTarget as HTMLElement | null)?.closest('[data-cursor]');
-      if (related === target) return; // todavía dentro
+      if (related === target) return;
       circle!.classList.remove('is-hover', 'is-link', 'is-view');
+      document.documentElement.classList.remove('cursor-state-hover', 'cursor-state-link', 'cursor-state-view');
     }
 
     window.addEventListener('mousemove', onMouseMove);
@@ -97,12 +102,37 @@ export function CustomCursor() {
       document.removeEventListener('pointerover', onPointerOver);
       document.removeEventListener('pointerout', onPointerOut);
       document.documentElement.classList.remove('has-custom-cursor');
+      document.documentElement.classList.remove('cursor-state-hover', 'cursor-state-link', 'cursor-state-view');
     };
   }, []);
 
   return (
     <>
-      <div className="cursor-dot" ref={dotRef} aria-hidden="true" />
+      {/* Flecha orgánica apuntando a la izquierda */}
+      <svg
+        ref={arrowRef}
+        className="cursor-arrow is-hidden"
+        viewBox="0 0 32 32"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path
+          d="M27.5 4.8
+             C 28.2 4.3, 28.9 4.8, 28.7 5.7
+             L 22.5 26.5
+             C 22.2 27.5, 21 27.6, 20.5 26.7
+             L 16.5 19.8
+             C 16.2 19.3, 15.7 19, 15.1 19
+             L 6.5 18.2
+             C 5.5 18.1, 5.2 16.9, 6 16.4 Z"
+          stroke="currentColor"
+          strokeWidth="0.5"
+          strokeLinejoin="round"
+        />
+      </svg>
+
+      {/* Círculo outline alrededor */}
       <div className="cursor-circle is-hidden" ref={circleRef} aria-hidden="true">
         <span className="cursor-circle__label" ref={labelRef}>
           View
