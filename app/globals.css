@@ -117,45 +117,57 @@ html.lenis, html.lenis body { height: auto; }
   background: var(--accent); transform: translateY(100%); pointer-events: none;
 }
 
-.cursor-dot, .cursor-circle {
+/* ──────────────────────────────────────────────────────────
+   CUSTOM CURSOR · Arrow (apunta izquierda) + Circle outline
+   Variante 1 — Sutil
+   ────────────────────────────────────────────────────────── */
+
+.cursor-arrow, .cursor-circle {
   position: fixed; top: 0; left: 0;
   pointer-events: none; z-index: 9999;
-  border-radius: 9999px; will-change: transform;
+  will-change: transform;
 }
-.cursor-dot {
-  width: 6px; height: 6px;
-  background: var(--color-neutral-950);
-  transform: translate(-50%, -50%);
+
+.cursor-arrow {
+  width: 18px;
+  height: 18px;
+  color: var(--color-neutral-950);
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-[data-theme="dark"] .cursor-dot { background: var(--color-neutral-100); }
+[data-theme="dark"] .cursor-arrow {
+  color: var(--color-neutral-100);
+  filter: drop-shadow(0 1px 2px rgba(255,255,255,0.08));
+}
+
 .cursor-circle {
-  width: 36px; height: 36px;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--color-neutral-950);
-  transform: translate(-50%, -50%);
-  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              background 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 9999px;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 [data-theme="dark"] .cursor-circle { border-color: var(--color-neutral-100); }
+
 .cursor-circle.is-hover {
-  width: 64px; height: 64px;
-  background: color-mix(in oklab, var(--color-neutral-950) 8%, transparent);
-  border-color: transparent;
+  width: 56px; height: 56px;
 }
-[data-theme="dark"] .cursor-circle.is-hover {
-  background: color-mix(in oklab, var(--color-neutral-100) 12%, transparent);
-}
+
 .cursor-circle.is-link {
-  width: 80px; height: 80px;
+  width: 72px; height: 72px;
   background: var(--accent); border-color: var(--accent);
   mix-blend-mode: difference;
 }
+
 .cursor-circle.is-view {
-  width: 110px; height: 110px;
+  width: 100px; height: 100px;
   background: var(--accent); border-color: var(--accent);
 }
+
 .cursor-circle__label {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
@@ -166,7 +178,14 @@ html.lenis, html.lenis body { height: auto; }
   white-space: nowrap;
 }
 .cursor-circle.is-view .cursor-circle__label { opacity: 1; }
-.cursor-circle.is-hidden { opacity: 0; }
+
+.cursor-arrow.is-hidden, .cursor-circle.is-hidden { opacity: 0; }
+
+/* Cuando hover sobre link o view, la flecha se desvanece */
+html.cursor-state-link .cursor-arrow,
+html.cursor-state-view .cursor-arrow {
+  opacity: 0;
+}
 
 .split-word { display: inline-block; overflow: hidden; vertical-align: top; }
 .split-word__inner { display: inline-block; will-change: transform; }
