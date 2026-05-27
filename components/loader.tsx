@@ -9,9 +9,6 @@ import gsap from 'gsap';
  * - Logo se llena con lime
  * - Cortina lime barre desde abajo, revela el sitio, sale por arriba
  * - Duración total: ~2s
- *
- * Bloquea scroll mientras carga. Se desmonta al terminar.
- * Respeta prefers-reduced-motion.
  */
 export function Loader({ onComplete }: { onComplete?: () => void }) {
   const loaderRef = useRef<HTMLDivElement>(null);
@@ -24,13 +21,23 @@ export function Loader({ onComplete }: { onComplete?: () => void }) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (reduced) {
-      // Sin animación: ocultar de inmediato
       setIsDone(true);
       onComplete?.();
       return;
     }
 
-    // Bloquear scroll mientras dura el loader
+    // ⚠️ Guard: verificar que todos los refs existen antes de animar
+    const path1 = path1Ref.current;
+    const path2 = path2Ref.current;
+    const curtain = curtainRef.current;
+    const loader = loaderRef.current;
+
+    if (!path1 || !path2 || !curtain || !loader) {
+      setIsDone(true);
+      onComplete?.();
+      return;
+    }
+
     document.body.style.overflow = 'hidden';
 
     const tl = gsap.timeline({
@@ -41,9 +48,8 @@ export function Loader({ onComplete }: { onComplete?: () => void }) {
       },
     });
 
-    // Logo paths se dibujan
     tl.fromTo(
-      [path1Ref.current, path2Ref.current],
+      [path1, path2],
       { strokeDashoffset: 400, fill: 'transparent' },
       {
         strokeDashoffset: 0,
@@ -52,9 +58,8 @@ export function Loader({ onComplete }: { onComplete?: () => void }) {
         stagger: 0.08,
       }
     );
-    // Logo se llena
     tl.to(
-      [path1Ref.current, path2Ref.current],
+      [path1, path2],
       {
         fill: 'var(--accent)',
         duration: 0.25,
@@ -62,9 +67,8 @@ export function Loader({ onComplete }: { onComplete?: () => void }) {
       },
       '-=0.2'
     );
-    // Cortina sube
     tl.to(
-      curtainRef.current,
+      curtain,
       {
         y: '0%',
         duration: 0.5,
@@ -72,9 +76,8 @@ export function Loader({ onComplete }: { onComplete?: () => void }) {
       },
       '-=0.1'
     );
-    // Loader fade
     tl.to(
-      loaderRef.current,
+      loader,
       {
         opacity: 0,
         duration: 0.2,
@@ -82,9 +85,8 @@ export function Loader({ onComplete }: { onComplete?: () => void }) {
       },
       '-=0.35'
     );
-    // Cortina sale
     tl.to(
-      curtainRef.current,
+      curtain,
       {
         y: '-100%',
         duration: 0.65,
