@@ -55,9 +55,10 @@ const config: Config = {
         'accent-clay':   'var(--color-accent-clay)',
       },
       fontFamily: {
-        sans:  ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
-        serif: ['var(--font-instrument-serif)', 'serif'],
-        mono:  ['var(--font-geist-mono)', 'monospace'],
+        sans:    ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        serif:   ['var(--font-instrument-serif)', 'serif'],
+        mono:    ['var(--font-geist-mono)', 'monospace'],
+        display: ['"Archivo Black"', 'var(--font-geist-sans)', 'sans-serif'],
       },
       fontSize: {
         '2xs':  ['0.6875rem', { lineHeight: '1.4' }],
