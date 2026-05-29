@@ -1,127 +1,124 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
-import { Eyebrow } from '@/components/ui/eyebrow';
-import { Button } from '@/components/ui/button';
-import { Magnetic } from '@/components/magnetic';
-import { SplitText } from '@/components/split-text';
-import { heroRotatingWords, profile } from '@/lib/content';
+import { useEffect, useRef } from 'react';
+import { Logo } from '@/components/ui/logo';
+
+/**
+ * Hero — RADD style
+ *
+ * - Nav arriba: logo (izq) + menú pill con indicator deslizante (der)
+ * - "MANUEL" gigante en Archivo Black ocupando el ancho
+ * - Imagen cuadrada (placeholder) centrada sobre el texto, con drop shadow
+ *   y hover (scale + rotate)
+ * - Parallax sutil del título al mover el mouse
+ * - Breathing del letter-spacing (CSS)
+ */
+
+const NAV_ITEMS = [
+  { label: 'Work', href: '#work' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' },
+];
 
 export function Hero() {
-  const [wordIndex, setWordIndex] = useState(0);
+  const heroRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const menuRef = useRef<HTMLElement>(null);
+  const indicatorRef = useRef<HTMLSpanElement>(null);
 
+  // Parallax del título
   useEffect(() => {
-    const interval = setInterval(() => {
-      setWordIndex((i) => (i + 1) % heroRotatingWords.length);
-    }, 2400);
-    return () => clearInterval(interval);
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+
+    const hero = heroRef.current;
+    const title = titleRef.current;
+    if (!hero || !title) return;
+
+    let targetX = 0,
+      targetY = 0,
+      currentX = 0,
+      currentY = 0;
+    let rafId = 0;
+
+    function onMove(e: MouseEvent) {
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 2;
+      targetX = -((e.clientX - cx) / cx) * 15;
+      targetY = -((e.clientY - cy) / cy) * 8;
+    }
+
+    function animate() {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      if (title) {
+        title.style.transform = `translate(${currentX}px, ${currentY}px)`;
+      }
+      rafId = requestAnimationFrame(animate);
+    }
+
+    hero.addEventListener('mousemove', onMove);
+    rafId = requestAnimationFrame(animate);
+
+    return () => {
+      hero.removeEventListener('mousemove', onMove);
+      cancelAnimationFrame(rafId);
+    };
   }, []);
 
+  // Menú indicator deslizante
+  function moveIndicator(target: HTMLElement) {
+    const menu = menuRef.current;
+    const indicator = indicatorRef.current;
+    if (!menu || !indicator) return;
+    const menuRect = menu.getBoundingClientRect();
+    const linkRect = target.getBoundingClientRect();
+    indicator.style.left = `${linkRect.left - menuRect.left}px`;
+    indicator.style.width = `${linkRect.width}px`;
+    indicator.style.opacity = '1';
+  }
+
+  function hideIndicator() {
+    const indicator = indicatorRef.current;
+    if (indicator) indicator.style.opacity = '0';
+  }
+
   return (
-    <section
-      id="hero"
-      className="relative min-h-[100svh] flex flex-col justify-center px-6 md:px-8 lg:px-12 pt-32 pb-20"
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-      >
-        <Eyebrow withDot>Available for work · 2026</Eyebrow>
-      </motion.div>
+    <section ref={heroRef} className="hero-radd" id="top">
+      {/* NAV */}
+      <header className="hero-radd__nav">
+        <a href="#top" className="hero-radd__brand" data-cursor="hover">
+          <Logo size={26} />
+          <span>Manuel Reis</span>
+        </a>
 
-      {/* Titular: parte 1 con SplitText, parte 2 con rotador */}
-      <h1 className="font-serif font-normal text-fg mt-6 leading-[0.95] tracking-tighter">
-        <SplitText
-          as="span"
-          className="block"
-          delay={0.2}
-          stagger={0.08}
-          duration={1}
-          immediate
-        >
-          {`${profile.name},`}
-        </SplitText>
-
-        <motion.span
-          className="block relative overflow-hidden italic text-accent-strong"
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            fontSize: 'clamp(3rem, 11vw, 10rem)',
-            height: '1.05em',
-          }}
-          aria-live="polite"
-        >
-          <AnimatePresence mode="wait">
-            <motion.span
-              key={wordIndex}
-              className="absolute left-0 top-0 whitespace-nowrap"
-              initial={{ y: '100%', opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: '-100%', opacity: 0 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        <nav className="hero-radd__menu" ref={menuRef} onMouseLeave={hideIndicator}>
+          <span className="hero-radd__menu-indicator" ref={indicatorRef} />
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              data-cursor="hover"
+              onMouseEnter={(e) => moveIndicator(e.currentTarget)}
             >
-              {heroRotatingWords[wordIndex]}
-            </motion.span>
-          </AnimatePresence>
-        </motion.span>
-      </h1>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </header>
 
-      <style jsx>{`
-        h1 :global(.split-word) { font-size: clamp(3rem, 11vw, 10rem); }
-      `}</style>
+      {/* STAGE */}
+      <div className="hero-radd__stage">
+        <h1 className="hero-radd__title" ref={titleRef}>
+          MANUEL
+        </h1>
 
-      <motion.div
-        className="mt-10 flex flex-col gap-7 max-w-2xl"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <p className="text-md md:text-lg text-fg-muted leading-relaxed">
-          {profile.role} based in Lisbon — {profile.shortBio}
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <Magnetic strength={0.4}>
-            <Button
-              variant="primary"
-              data-cursor="link"
-              onClick={() =>
-                document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })
-              }
-            >
-              View selected work →
-            </Button>
-          </Magnetic>
-          <Magnetic strength={0.3}>
-            <Button
-              variant="secondary"
-              data-cursor="link"
-              onClick={() =>
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-              }
-            >
-              Get in touch
-            </Button>
-          </Magnetic>
+        <div className="hero-radd__image" data-cursor="view" data-cursor-label="Manuel">
+          {/* Placeholder — reemplazar por <img> cuando haya foto */}
+          <span className="hero-radd__image-icon">img</span>
+          <span className="hero-radd__image-label">Placeholder — 1:1</span>
         </div>
-      </motion.div>
-
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-2xs uppercase tracking-widest text-fg-subtle flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.6 }}
-      >
-        <span>Scroll</span>
-        <motion.div
-          className="w-px h-8 bg-fg-subtle origin-top"
-          animate={{ scaleY: [0, 1, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      </motion.div>
+      </div>
     </section>
   );
 }
