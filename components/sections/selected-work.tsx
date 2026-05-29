@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { projects } from '@/lib/content';
+import { SpinningCursor } from '@/components/spinning-cursor';
 
 /**
  * Selected Work — cards expansibles
@@ -55,8 +56,7 @@ export function SelectedWork() {
             <Link
               href={`/work/${project.slug}`}
               className="work-card__link"
-              data-cursor="view"
-              data-cursor-label="View"
+              data-cursor="hide"
             >
               <div className="work-card__label">{project.title}</div>
               <div className="work-card__media">
@@ -72,6 +72,7 @@ export function SelectedWork() {
                   </div>
                   <p className="work-card__desc">{project.description}</p>
                 </div>
+                <SpinningCursor text="VIEW PROJECT · " repeat={2} />
               </div>
             </Link>
           </motion.article>
