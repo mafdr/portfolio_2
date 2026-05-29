@@ -24,7 +24,7 @@ export const projects: Project[] = [
     year: '2024',
     description:
       'Identity system for a clinical practice — visual language built around trust, precision and a calm green palette.',
-    coverAccent: 'linear-gradient(135deg, #1b3a0d 0%, #5a7a00 100%)',
+    cover: '/projects/emerald.jpg',
   },
   {
     slug: 'humanly',
@@ -34,7 +34,7 @@ export const projects: Project[] = [
     year: '2025',
     description:
       'A web platform where HR teams and employees manage data, request vacations and review reports — designed to simplify what used to be friction.',
-    coverAccent: 'linear-gradient(135deg, #d3fa53 0%, #a8d31b 100%)',
+    cover: '/projects/humanly.jpg',
   },
   {
     slug: 'rotki',
@@ -44,7 +44,7 @@ export const projects: Project[] = [
     year: '2026',
     description:
       'Online open-source portfolio for crypto — designing clarity into a notoriously noisy data domain.',
-    coverAccent: 'linear-gradient(135deg, #0a0a0a 0%, #21211f 100%)',
+    cover: '/projects/rotki.jpg',
   },
   {
     slug: 'nonetop',
@@ -54,7 +54,7 @@ export const projects: Project[] = [
     year: '2026',
     description:
       'A finance app focused on cutting cognitive overhead — money decisions made with confidence, not anxiety.',
-    coverAccent: 'linear-gradient(135deg, #f0f2e9 0%, #d3fa53 100%)',
+    cover: '/projects/nonetop.jpg',
   },
 ];
 
