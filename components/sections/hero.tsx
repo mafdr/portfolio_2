@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Logo } from '@/components/ui/logo';
 import { SpinningCursor } from '@/components/spinning-cursor';
+import { MorphingTitle } from '@/components/morphing-title';
 
 const NAV_ITEMS = [
   { label: 'Work', href: '#work' },
@@ -11,39 +12,8 @@ const NAV_ITEMS = [
 ];
 
 export function Hero() {
-  const heroRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
   const menuRef = useRef<HTMLElement>(null);
   const indicatorRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) return;
-    const hero = heroRef.current;
-    const title = titleRef.current;
-    if (!hero || !title) return;
-
-    let targetX = 0, targetY = 0, currentX = 0, currentY = 0, rafId = 0;
-
-    function onMove(e: MouseEvent) {
-      const cx = window.innerWidth / 2;
-      const cy = window.innerHeight / 2;
-      targetX = -((e.clientX - cx) / cx) * 15;
-      targetY = -((e.clientY - cy) / cy) * 8;
-    }
-    function animate() {
-      currentX += (targetX - currentX) * 0.08;
-      currentY += (targetY - currentY) * 0.08;
-      if (title) title.style.transform = `translate(${currentX}px, ${currentY}px)`;
-      rafId = requestAnimationFrame(animate);
-    }
-    hero.addEventListener('mousemove', onMove);
-    rafId = requestAnimationFrame(animate);
-    return () => {
-      hero.removeEventListener('mousemove', onMove);
-      cancelAnimationFrame(rafId);
-    };
-  }, []);
 
   function moveIndicator(target: HTMLElement) {
     const menu = menuRef.current;
@@ -61,7 +31,7 @@ export function Hero() {
   }
 
   return (
-    <section ref={heroRef} className="hero-radd" id="top">
+    <section className="hero-radd" id="top">
       <header className="hero-radd__nav">
         <a href="#top" className="hero-radd__brand" data-cursor="hover">
           <Logo size={44} />
@@ -84,9 +54,7 @@ export function Hero() {
       </header>
 
       <div className="hero-radd__stage">
-        <h1 className="hero-radd__title" ref={titleRef}>
-          MANUEL
-        </h1>
+        <MorphingTitle />
 
         <div className="hero-radd__image" data-cursor="hide">
           <img
