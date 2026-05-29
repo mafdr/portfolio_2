@@ -2,25 +2,13 @@
 
 import { useEffect, useRef } from 'react';
 import { Logo } from '@/components/ui/logo';
-
-/**
- * Hero — RADD style
- *
- * - Nav: logo (izq, grande) + menú pill con indicator deslizante (der)
- * - "MANUEL" gigante en Archivo Black
- * - Imagen cuadrada (hero_image_1) que cambia a hero_image_2 en hover
- * - Spinning text "MANUEL REIS ·" girando sobre la imagen en hover
- * - Parallax sutil del título al mover el mouse
- */
+import { SpinningCursor } from '@/components/spinning-cursor';
 
 const NAV_ITEMS = [
   { label: 'Work', href: '#work' },
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
 ];
-
-// Texto para el spinning circle
-const SPIN_TEXT = 'MANUEL REIS · MANUEL REIS · ';
 
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
@@ -72,10 +60,6 @@ export function Hero() {
     if (indicator) indicator.style.opacity = '0';
   }
 
-  // Construir las letras del spinning text en círculo
-  const chars = SPIN_TEXT.split('');
-  const anglePerChar = 360 / chars.length;
-
   return (
     <section ref={heroRef} className="hero-radd" id="top">
       <header className="hero-radd__nav">
@@ -115,22 +99,7 @@ export function Hero() {
             alt="Manuel Reis"
             className="hero-radd__img hero-radd__img--hover"
           />
-
-          {/* Spinning text que aparece en hover */}
-          <div className="hero-radd__spin" aria-hidden="true">
-            <div className="hero-radd__spin-inner">
-              {chars.map((char, i) => (
-                <span
-                  key={i}
-                  style={{
-                    transform: `rotate(${i * anglePerChar}deg)`,
-                  }}
-                >
-                  {char}
-                </span>
-              ))}
-            </div>
-          </div>
+          <SpinningCursor text="MANUEL REIS · " repeat={2} />
         </div>
       </div>
     </section>
