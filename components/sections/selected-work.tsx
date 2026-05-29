@@ -62,7 +62,7 @@ export function SelectedWork() {
               <div className="work-card__media">
                 <img
                   className="work-card__img"
-                  src="/image_placeholder.jpg"
+                  src={project.cover}
                   alt={project.title}
                 />
                 <div className="work-card__overlay">
