@@ -28,7 +28,7 @@ export function ClientMarquee() {
       {/* Fila 1 — logos, hacia la izquierda */}
       <div className="relative flex overflow-hidden items-center">
         <motion.div
-          className="flex shrink-0 items-center gap-16 md:gap-24 pr-16 md:pr-24"
+          className="flex shrink-0 items-center gap-32 md:gap-48 pr-32 md:pr-48"
           animate={{ x: ['0%', '-50%'] }}
           transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
         >
