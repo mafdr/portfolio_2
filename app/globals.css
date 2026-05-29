@@ -659,6 +659,91 @@ html.cursor-on-dark .cursor-circle.is-hover {
   .work-card__media { height: 380px; }
 }
 
+/* ══════════════════════════════════════════════════════════
+   ABOUT · "WHO / AM I?" estilo poster
+   ══════════════════════════════════════════════════════════ */
+.about-section {
+  position: relative;
+  min-height: 100vh;
+  background: var(--accent);
+  color: var(--color-neutral-950);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 32px;
+  overflow: hidden;
+}
+/* Textura sutil */
+.about-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(0,0,0,0.035) 0%, transparent 8%),
+    radial-gradient(circle at 80% 25%, rgba(0,0,0,0.03) 0%, transparent 6%),
+    radial-gradient(circle at 65% 75%, rgba(0,0,0,0.035) 0%, transparent 7%),
+    radial-gradient(circle at 30% 85%, rgba(0,0,0,0.025) 0%, transparent 5%);
+  pointer-events: none;
+}
+
+.about-section__corner {
+  position: absolute;
+  font-family: var(--font-geist-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-neutral-950);
+  line-height: 1.5;
+  z-index: 3;
+}
+.about-section__corner--tl { top: 32px; left: 32px; }
+.about-section__corner--tr { top: 32px; right: 32px; text-align: right; }
+.about-section__corner--bl { bottom: 32px; left: 32px; }
+.about-section__corner--br { bottom: 32px; right: 32px; text-align: right; }
+.about-section__corner span { display: block; opacity: 0.6; }
+.about-section__corner strong { font-weight: 400; }
+
+/* Palabras WHO / AM I? (SVG) */
+.about-section__word {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+}
+.about-section__word svg {
+  width: min(88%, 1100px);
+  height: auto;
+  fill: var(--color-neutral-950);
+}
+.about-section__word--top { justify-content: flex-start; }
+.about-section__word--top svg { margin-left: -1%; }
+.about-section__word--bottom { justify-content: flex-end; }
+.about-section__word--bottom svg { margin-right: -1%; }
+
+/* Bio central */
+.about-section__bio {
+  position: relative;
+  z-index: 4;
+  max-width: 580px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 24px 0;
+}
+.about-section__bio p {
+  font-family: var(--font-geist-sans);
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.55;
+  margin-bottom: 16px;
+  color: var(--color-neutral-950);
+}
+.about-section__bio p:last-child { margin-bottom: 0; }
+
+@media (max-width: 768px) {
+  .about-section__word svg { width: 96%; }
+  .about-section__bio p { font-size: 14px; }
+  .about-section__corner { font-size: 9px; }
+}
+
 
 
 @media (prefers-reduced-motion: reduce) {
