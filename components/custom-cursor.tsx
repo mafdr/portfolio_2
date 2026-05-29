@@ -68,11 +68,21 @@ export function CustomCursor() {
 
     // Delegación: detectar [data-cursor] en todo el documento
     function onPointerOver(e: PointerEvent) {
+      // Detección de tema oscuro: si el elemento (o un ancestro) marca fondo oscuro
+      const darkZone = (e.target as HTMLElement).closest('[data-cursor-theme="dark"]');
+      if (darkZone) {
+        document.documentElement.classList.add('cursor-on-dark');
+      } else {
+        document.documentElement.classList.remove('cursor-on-dark');
+      }
+
       const target = (e.target as HTMLElement).closest('[data-cursor]');
       if (!target) return;
       const state = target.getAttribute('data-cursor');
-      circle!.classList.remove('is-hover', 'is-link', 'is-view');
-      document.documentElement.classList.remove('cursor-state-hover', 'cursor-state-link', 'cursor-state-view');
+      circle!.classList.remove('is-hover', 'is-link', 'is-view', 'is-hide');
+      document.documentElement.classList.remove(
+        'cursor-state-hover', 'cursor-state-link', 'cursor-state-view', 'cursor-state-hide'
+      );
       if (state === 'view') {
         const customLabel = target.getAttribute('data-cursor-label') || 'View';
         label!.textContent = customLabel;
@@ -86,8 +96,10 @@ export function CustomCursor() {
       if (!target) return;
       const related = (e.relatedTarget as HTMLElement | null)?.closest('[data-cursor]');
       if (related === target) return;
-      circle!.classList.remove('is-hover', 'is-link', 'is-view');
-      document.documentElement.classList.remove('cursor-state-hover', 'cursor-state-link', 'cursor-state-view');
+      circle!.classList.remove('is-hover', 'is-link', 'is-view', 'is-hide');
+      document.documentElement.classList.remove(
+        'cursor-state-hover', 'cursor-state-link', 'cursor-state-view', 'cursor-state-hide'
+      );
     }
 
     window.addEventListener('mousemove', onMouseMove);
