@@ -1,65 +1,64 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { clients } from '@/lib/content';
+import { clientLogos, skills } from '@/lib/content';
 
+/**
+ * Client Marquee — doble fila en loop
+ * - Fila 1: logos de clientes (PNG), se mueve hacia la IZQUIERDA
+ * - Fila 2: skills en sans/mono UPPERCASE, se mueve hacia la DERECHA
+ * - Espacio vertical compacto
+ */
 export function ClientMarquee() {
-  // Duplicamos los clientes para loop infinito sin saltos
-  const doubled = [...clients, ...clients];
+  const logosDoubled = [...clientLogos, ...clientLogos];
+  const skillsDoubled = [...skills, ...skills];
 
   return (
     <section
-      aria-label="Trusted by"
-      className="border-y border-border-subtle py-8 md:py-12 bg-bg-surface overflow-hidden"
+      aria-label="Brands I've collaborated with"
+      className="border-y border-border-subtle py-10 md:py-14 bg-bg-surface overflow-hidden"
     >
       {/* Etiqueta */}
-      <div className="px-6 md:px-8 lg:px-12 mb-6">
+      <div className="px-6 md:px-8 lg:px-12 mb-8">
         <div className="font-mono text-2xs uppercase tracking-widest text-fg-subtle">
-          Trusted by
+          Brands I&apos;ve collaborated with
         </div>
       </div>
 
-      {/* Fila 1 - hacia izquierda */}
-      <div className="relative flex overflow-hidden">
+      {/* Fila 1 — logos, hacia la izquierda */}
+      <div className="relative flex overflow-hidden items-center">
         <motion.div
-          className="flex shrink-0 gap-12 md:gap-16 pr-12 md:pr-16"
+          className="flex shrink-0 items-center gap-16 md:gap-24 pr-16 md:pr-24"
           animate={{ x: ['0%', '-50%'] }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
+          transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
         >
-          {doubled.map((client, i) => (
-            <span
-              key={`r1-${i}`}
-              className="font-serif italic text-fg-muted/70 hover:text-fg transition-colors duration-fast shrink-0"
-              style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}
-            >
-              {client}
-            </span>
+          {logosDoubled.map((logo, i) => (
+            <img
+              key={`logo-${i}`}
+              src={logo.src}
+              alt={logo.alt}
+              className="shrink-0 h-7 md:h-9 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-base"
+              style={{ maxWidth: 160 }}
+            />
           ))}
         </motion.div>
       </div>
 
-      {/* Fila 2 - hacia derecha (criss-cross) */}
-      <div className="relative flex overflow-hidden mt-2">
+      {/* Fila 2 — skills, hacia la derecha */}
+      <div className="relative flex overflow-hidden mt-7">
         <motion.div
-          className="flex shrink-0 gap-12 md:gap-16 pr-12 md:pr-16"
+          className="flex shrink-0 gap-10 md:gap-14 pr-10 md:pr-14"
           animate={{ x: ['-50%', '0%'] }}
-          transition={{
-            duration: 40,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
+          transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
         >
-          {doubled.map((client, i) => (
+          {skillsDoubled.map((skill, i) => (
             <span
-              key={`r2-${i}`}
-              className="font-sans uppercase tracking-widest font-medium text-fg-muted/50 hover:text-fg transition-colors duration-fast shrink-0"
-              style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)' }}
+              key={`skill-${i}`}
+              className="font-mono uppercase tracking-widest text-fg-muted/55 shrink-0 flex items-center gap-10 md:gap-14"
+              style={{ fontSize: 'clamp(0.875rem, 1.4vw, 1.125rem)' }}
             >
-              {client}
+              {skill}
+              <span className="text-accent-strong/40">/</span>
             </span>
           ))}
         </motion.div>
