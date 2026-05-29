@@ -97,10 +97,27 @@ export const profile = {
   shortBio: '9 years building digital products end-to-end.',
 };
 
-// Logos de clientes para el marquee. Texto-only por ahora (puedes
-// reemplazar por <img src="/logos/..."> cuando los tengas)
-export const clients = [
-  'Emerald Clinical', 'Humanly', 'Rotki', 'Nonetop',
-  'Studio North', 'Atelier Mira', 'Helix Labs', 'Public House',
-  'Acme Co', 'Field Notes',
+// Logos de clientes para el marquee (PNG procesados en /public/logos)
+export const clientLogos = [
+  { src: '/logos/logo_1.png', alt: 'Nespresso' },
+  { src: '/logos/logo_2.png', alt: 'Nestlé' },
+  { src: '/logos/logo_3.png', alt: 'Emerald Clinical Trials' },
+  { src: '/logos/logo_4.png', alt: 'Client' },
+  { src: '/logos/logo_5.png', alt: 'Bayer' },
+  { src: '/logos/logo_6.png', alt: 'Client' },
+  { src: '/logos/logo_7.png', alt: 'Siemens' },
+  { src: '/logos/logo_8.png', alt: 'Delta4' },
+];
+
+// Skills para la segunda línea del marquee
+export const skills = [
+  'Branding',
+  'UX/UI Design',
+  'UX Research',
+  'Design Systems',
+  'Prototyping',
+  'Wireframing',
+  'User Testing',
+  'Interaction Design',
+  'Visual Identity',
 ];
