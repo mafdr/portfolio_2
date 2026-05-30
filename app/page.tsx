@@ -20,23 +20,22 @@ export default function HomePage() {
     <>
       <NavFloating />
       <main>
-        {/* Bloque 1: Hero — sticky, será cubierto */}
+        {/* Bloque 1: Hero — sticky, será cubierto por SelectedWork */}
         <div className="stack-sticky" style={{ zIndex: 1 }}>
           <Hero />
         </div>
 
-        {/* Bloque 2: SelectedWork — sube y cubre el hero */}
-        <div className="stack-cover" style={{ zIndex: 2 }}>
+        {/* Bloque 2: SelectedWork+Marquee — cubre el Hero Y queda sticky para que About lo cubra */}
+        <div className="stack-sticky stack-cover" style={{ zIndex: 2 }}>
           <SelectedWork />
           <ClientMarquee />
         </div>
 
-        {/* Bloque 3: About — sube y cubre lo anterior (WHO AM I) */}
+        {/* Bloque 3: About — sube y cubre Work+Marquee */}
         <div className="stack-cover" style={{ zIndex: 3 }}>
           <About />
         </div>
       </main>
-
       <Footer />
     </>
   );
