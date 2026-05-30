@@ -674,7 +674,7 @@ html.cursor-on-dark .cursor-circle.is-hover {
 }
 
 /* ══════════════════════════════════════════════════════════
-   ABOUT · "WHO / AM I?" estilo poster
+   ABOUT · "WHO / AM I?" estilo poster + stickers
    ══════════════════════════════════════════════════════════ */
 .about-section {
   position: relative;
@@ -684,7 +684,8 @@ html.cursor-on-dark .cursor-circle.is-hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 40px 32px;
+  align-items: center;
+  padding: 56px 32px;
   overflow: hidden;
 }
 /* Textura sutil */
@@ -700,48 +701,28 @@ html.cursor-on-dark .cursor-circle.is-hover {
   pointer-events: none;
 }
 
-.about-section__corner {
-  position: absolute;
-  font-family: var(--font-geist-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-neutral-950);
-  line-height: 1.5;
-  z-index: 3;
-}
-.about-section__corner--tl { top: 32px; left: 32px; }
-.about-section__corner--tr { top: 32px; right: 32px; text-align: right; }
-.about-section__corner--bl { bottom: 32px; left: 32px; }
-.about-section__corner--br { bottom: 32px; right: 32px; text-align: right; }
-.about-section__corner span { display: block; opacity: 0.6; }
-.about-section__corner strong { font-weight: 400; }
-
-/* Palabras WHO / AM I? (SVG) */
+/* Palabras WHO / AM I? (SVG) — centradas */
 .about-section__word {
   position: relative;
   z-index: 2;
   width: 100%;
   display: flex;
+  justify-content: center;
 }
 .about-section__word svg {
-  width: min(88%, 1100px);
+  width: min(72%, 800px);
   height: auto;
   fill: var(--color-neutral-950);
 }
-.about-section__word--top { justify-content: flex-start; }
-.about-section__word--top svg { margin-left: -1%; }
-.about-section__word--bottom { justify-content: flex-end; }
-.about-section__word--bottom svg { margin-right: -1%; }
 
-/* Bio central */
+/* Bio central — compacta con respiro lateral */
 .about-section__bio {
   position: relative;
   z-index: 4;
-  max-width: 580px;
+  max-width: 540px;
   margin: 0 auto;
   text-align: center;
-  padding: 24px 0;
+  padding: 32px 24px;
 }
 .about-section__bio p {
   font-family: var(--font-geist-sans);
@@ -751,11 +732,90 @@ html.cursor-on-dark .cursor-circle.is-hover {
   color: var(--color-neutral-950);
 }
 .about-section__bio p:last-child { margin-bottom: 0; }
+.about-section__bio strong { font-weight: 600; }
+
+/* ── STICKERS flotando ── */
+.sticker {
+  position: absolute;
+  z-index: 3;
+  pointer-events: auto;
+  cursor: pointer;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,0.18));
+  animation: float var(--dur, 6s) ease-in-out infinite;
+}
+.sticker img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 350ms cubic-bezier(0.34,1.56,0.64,1), filter 350ms ease;
+}
+.sticker:hover { z-index: 20; }
+.sticker:hover img {
+  transform: scale(1.12);
+  filter: drop-shadow(0 14px 26px rgba(0,0,0,0.28));
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50%      { transform: translateY(-18px) rotate(calc(var(--rot, 0deg) + 2deg)); }
+}
+
+/* Posiciones */
+.sticker--book    { top: 11%;  left: 6%;   width: 130px; --rot: -8deg; --dur: 6.5s; }
+.sticker--cat     { top: 20%;  right: 7%;  width: 135px; --rot: 7deg;  --dur: 7.2s; }
+.sticker--design  { top: 44%;  left: 19%;  width: 120px; --rot: 5deg;  --dur: 6.8s; }
+.sticker--mario   { top: 44%;  right: 19%; width: 115px; --rot: -6deg; --dur: 5.8s; }
+.sticker--idesign { top: 62%;  right: 14%; width: 135px; --rot: 4deg;  --dur: 6.2s; }
+.sticker--zelda   { bottom: 9%; left: 9%;  width: 115px; --rot: 9deg;  --dur: 7.6s; }
+
+/* Animaciones de hover individuales */
+
+/* Gato lector: wiggle */
+.sticker--book:hover img { animation: catWiggle 600ms ease-in-out; }
+@keyframes catWiggle {
+  0%   { transform: scale(1.12) rotate(0deg); }
+  20%  { transform: scale(1.12) rotate(-7deg); }
+  40%  { transform: scale(1.12) rotate(6deg); }
+  60%  { transform: scale(1.12) rotate(-4deg); }
+  80%  { transform: scale(1.12) rotate(3deg); }
+  100% { transform: scale(1.12) rotate(0deg); }
+}
+
+/* Gato con lentes: tilt cool */
+.sticker--cat:hover img { transform: scale(1.16) rotate(-9deg); }
+
+/* Mario: pop-up boing */
+.sticker--mario:hover img { animation: marioPop 500ms cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes marioPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.35); }
+  70%  { transform: scale(0.92); }
+  100% { transform: scale(1.12); }
+}
+
+/* I DESIGN (bocadillo): speech pop */
+.sticker--idesign:hover img { animation: speechPop 650ms cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes speechPop {
+  0%   { transform: scale(1) rotate(0deg); }
+  30%  { transform: scale(1.2) rotate(-3deg); }
+  55%  { transform: scale(0.96) rotate(2deg); }
+  75%  { transform: scale(1.14) rotate(-1deg); }
+  100% { transform: scale(1.12) rotate(0deg); }
+}
+
+/* Zelda: flip horizontal */
+.sticker--zelda:hover img { transform: scaleX(-1) scale(1.12); }
 
 @media (max-width: 768px) {
-  .about-section__word svg { width: 96%; }
+  .about-section__word svg { width: 90%; }
   .about-section__bio p { font-size: 14px; }
-  .about-section__corner { font-size: 9px; }
+  .sticker { width: 80px !important; }
+  .sticker--book    { top: 8%;  left: 2%; }
+  .sticker--cat     { top: 13%; right: 2%; }
+  .sticker--design  { top: 58%; left: 1%; }
+  .sticker--mario   { top: 62%; right: 1%; }
+  .sticker--idesign { top: 70%; right: 2%; }
+  .sticker--zelda   { bottom: 6%; left: 4%; }
 }
 
 
