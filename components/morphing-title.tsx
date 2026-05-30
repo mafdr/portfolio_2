@@ -11,7 +11,7 @@ import { useEffect, useRef } from 'react';
  * Ritmo normal: ~1.5s visible por palabra + 0.6s de transición.
  */
 
-const TEXTS = ['MAN UEL', 'RE IS', 'DESI GNER', 'LIS BON', 'UX UI'];
+const TEXTS = ['Manuel', 'Reis', 'Designer', 'Lisbon', 'UX / UI'];
 const MORPH_TIME = 600;   // ms de transición
 const COOLDOWN_TIME = 1500; // ms visible por palabra
 
@@ -27,7 +27,7 @@ export function MorphingTitle() {
 
     // Si reduced-motion: mostrar solo "Manuel" estático
     if (reduced) {
-      t1.textContent = 'MAN UEL';
+      t1.textContent = 'Manuel';
       t1.style.opacity = '100%';
       t1.style.filter = '';
       t2.style.opacity = '0%';
