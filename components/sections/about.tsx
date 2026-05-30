@@ -7,31 +7,32 @@ import { about } from '@/lib/content';
  * About — "WHO / AM I?" estilo poster (Valorant-like)
  *
  * - Fondo lime, texto negro
- * - WHO (SVG) arriba, AM I? (SVG) abajo — lettering custom inclinado
- * - Bio (3 párrafos) centrada entre las dos palabras
- * - Labels en las 4 esquinas (editorial mono)
+ * - WHO (SVG) arriba, AM I? (SVG) abajo
+ * - Bio (3 párrafos) centrada, con bolds en palabras clave
+ * - 6 stickers flotando con animaciones de hover individuales:
+ *   book (wiggle), cat (tilt cool), suelto (lift), mario (pop),
+ *   idesign (speech pop), zelda (flip horizontal)
  * - WHO entra desde la izquierda, AM I? desde la derecha, bio fade-in
  */
+
+const STICKERS = [
+  { cls: 'book',    src: '/stickers/book.png' },
+  { cls: 'cat',     src: '/stickers/cat.png' },
+  { cls: 'design',  src: '/stickers/suelto.png' },
+  { cls: 'mario',   src: '/stickers/mario.png' },
+  { cls: 'idesign', src: '/stickers/design.png' },
+  { cls: 'zelda',   src: '/stickers/zelda.png' },
+];
+
 export function About() {
   return (
     <section id="about" className="about-section">
-      {/* Esquinas */}
-      <div className="about-section__corner about-section__corner--tl">
-        <strong>About</strong>
-        <span>Manuel Reis</span>
-      </div>
-      <div className="about-section__corner about-section__corner--tr">
-        <strong>02 — Section</strong>
-        <span>Lisbon, PT</span>
-      </div>
-      <div className="about-section__corner about-section__corner--bl">
-        <span>9 years of</span>
-        <strong>Product Design</strong>
-      </div>
-      <div className="about-section__corner about-section__corner--br">
-        <span>Keep scrolling</span>
-        <strong>↓</strong>
-      </div>
+      {/* Stickers flotando */}
+      {STICKERS.map((s) => (
+        <div key={s.cls} className={`sticker sticker--${s.cls}`}>
+          <img src={s.src} alt="" />
+        </div>
+      ))}
 
       {/* WHO */}
       <motion.div
@@ -56,9 +57,23 @@ export function About() {
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
       >
-        {about.paragraphs.map((p, i) => (
-          <p key={i}>{p}</p>
-        ))}
+        <p>
+          Hi, I&apos;m a <strong>UX/UI Designer</strong>, and I solve problems for a living
+          &mdash; the kind where complexity turns into intuitive experiences, messy flows
+          become clear, and &quot;this feels confusing&quot; becomes &quot;this just makes sense.&quot;
+        </p>
+        <p>
+          For the past <strong>9 years</strong>, I&apos;ve been designing digital products{' '}
+          <strong>end-to-end</strong> &mdash; from understanding problems and mapping flows to
+          crafting interfaces and prototyping ideas. I care about building experiences that
+          feel simple, thoughtful, and genuinely useful.
+        </p>
+        <p>
+          Outside of design, I spend my time reading, cycling around Lisbon, experimenting
+          with clay, or playing video games. I grew up with <strong>The Legend of Zelda</strong>,
+          which probably explains my love for well-crafted worlds, smart systems, and
+          thoughtful interaction design.
+        </p>
       </motion.div>
 
       {/* AM I? */}
