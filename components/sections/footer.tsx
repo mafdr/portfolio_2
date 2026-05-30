@@ -1,165 +1,144 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'motion/react';
-import { contact, profile } from '@/lib/content';
-import { Eyebrow } from '@/components/ui/eyebrow';
-import { Magnetic } from '@/components/magnetic';
+
+/**
+ * Contact — sección final (fondo negro)
+ *
+ * - "Don't be boring," (light) + "LET'S WORK / TOGETHER" (Archivo Black lime)
+ *   con shimmer + float independiente por línea
+ * - 3 botones outline con icono: Email, Lisbon, LinkedIn
+ *   hover: relleno lime explosivo, texto/icono negro, crecen; hermanos se encogen 30%
+ * - Animación de entrada por bloques (escalonada, dinámica)
+ * - data-cursor-theme="dark" → el cursor se invierte a lime sobre el negro
+ */
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export function Footer() {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyEmail = async () => {
-    await navigator.clipboard.writeText(contact.email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
     <footer
       id="contact"
-      className="bg-bg-inverse text-fg-inverse px-6 md:px-8 lg:px-12 pt-20 md:pt-32 pb-8 overflow-hidden"
+      className="contact-section"
+      data-cursor-theme="dark"
     >
       {/* Eyebrow */}
-      <div className="mb-12 md:mb-16">
-        <Eyebrow withDot className="!text-neutral-300">
-          {contact.available ? 'Available for new projects' : 'Currently booked'}
-        </Eyebrow>
-      </div>
+      <motion.div
+        className="contact-section__eyebrow"
+        initial={{ opacity: 0, y: -12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.6, ease }}
+      >
+        Available for new projects
+      </motion.div>
 
-      {/* CTA principal */}
-      <div className="mb-16 md:mb-24">
-        <p
-          className="font-serif font-normal leading-[0.95] tracking-tighter mb-6"
-          style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}
-        >
-          Got something <em className="italic text-accent">to build</em>?
-          <br />
-          Let's talk.
-        </p>
-
-        {/* Mail clickeable enorme */}
-        <Magnetic strength={0.2}>
-          <motion.button
-            onClick={handleCopyEmail}
-            data-cursor="link"
-            className="group relative inline-flex items-center gap-3 mt-4 font-serif italic text-accent hover:text-accent-hover transition-colors duration-base"
-            style={{ fontSize: 'clamp(1.75rem, 4vw, 3.5rem)' }}
-            whileHover={{ x: 8 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-          >
-          {contact.email}
-          <span className="inline-flex items-center justify-center w-10 h-10 md:w-14 md:h-14 rounded-full border border-accent/30 group-hover:bg-accent group-hover:border-accent group-hover:text-fg-on-accent transition-all duration-base ease-out-expo">
-            {copied ? (
-              <CheckIcon />
-            ) : (
-              <CopyIcon />
-            )}
-          </span>
+      {/* Centro */}
+      <div className="contact-section__center">
+        <h2 className="contact-section__title">
           <motion.span
-            className="absolute -top-8 left-0 font-mono text-xs uppercase tracking-widest text-accent not-italic"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: copied ? 1 : 0, y: copied ? 0 : 10 }}
-            transition={{ duration: 0.3 }}
+            className="contact-section__title-top"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, delay: 0.1, ease }}
           >
-            Copied to clipboard
+            Don&apos;t be boring,
           </motion.span>
-        </motion.button>
-        </Magnetic>
+
+          <span className="contact-section__title-main">
+            <motion.span
+              className="contact-section__line contact-section__line--1"
+              initial={{ opacity: 0, y: 60, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.8, delay: 0.25, ease }}
+            >
+              Let&apos;s work
+            </motion.span>
+            <motion.span
+              className="contact-section__line contact-section__line--2"
+              initial={{ opacity: 0, y: 60, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.8, delay: 0.4, ease }}
+            >
+              together
+            </motion.span>
+          </span>
+        </h2>
+
+        <div className="contact-section__buttons">
+          {[
+            {
+              href: 'mailto:mafdr101@gmail.com',
+              label: 'Email',
+              svg: (
+                <>
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="M3 7l9 6 9-6" />
+                </>
+              ),
+            },
+            {
+              href: 'https://maps.google.com/?q=Lisbon,Portugal',
+              label: 'Lisbon, PT',
+              svg: (
+                <>
+                  <path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </>
+              ),
+            },
+            {
+              href: 'https://www.linkedin.com/in/manuel-reis-8537a1b6/',
+              label: 'LinkedIn',
+              svg: (
+                <>
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 13v4" />
+                </>
+              ),
+            },
+          ].map((btn, i) => (
+            <motion.a
+              key={btn.label}
+              href={btn.href}
+              target={btn.href.startsWith('mailto') ? undefined : '_blank'}
+              rel={btn.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+              className="contact-section__btn"
+              data-cursor="hover"
+              initial={{ opacity: 0, y: 30, scale: 0.85 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, delay: 0.6 + i * 0.12, ease }}
+            >
+              <svg viewBox="0 0 24 24">{btn.svg}</svg>
+              <span>{btn.label}</span>
+            </motion.a>
+          ))}
+        </div>
       </div>
 
-      {/* Meta grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 pb-12 border-b border-neutral-800">
+      {/* Bottom */}
+      <motion.div
+        className="contact-section__bottom"
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.6, delay: 1, ease }}
+      >
         <div>
-          <div className="font-mono text-2xs uppercase tracking-widest text-neutral-500 mb-3">
-            Based in
-          </div>
-          <div className="font-sans text-md">{contact.location}</div>
+          <strong>Manuel Reis</strong>
+          <br />
+          Senior UX/UI Designer
         </div>
-        <div>
-          <div className="font-mono text-2xs uppercase tracking-widest text-neutral-500 mb-3">
-            Role
-          </div>
-          <div className="font-sans text-md">{profile.role}</div>
+        <div style={{ textAlign: 'right' }}>
+          <strong>© 2026</strong>
+          <br />
+          All rights reserved
         </div>
-        <div>
-          <div className="font-mono text-2xs uppercase tracking-widest text-neutral-500 mb-3">
-            Local time
-          </div>
-          <LocalTime />
-        </div>
-        <div>
-          <div className="font-mono text-2xs uppercase tracking-widest text-neutral-500 mb-3">
-            Elsewhere
-          </div>
-          <div className="flex flex-col gap-1">
-            {contact.socials.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="hover"
-                className="font-sans text-md hover:text-accent transition-colors duration-fast"
-              >
-                {s.label} ↗
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Nombre gigante */}
-      <div className="overflow-hidden -mx-6 md:-mx-8 lg:-mx-12">
-        <p
-          className="font-serif italic text-fg-inverse leading-none whitespace-nowrap text-center select-none"
-          style={{ fontSize: 'clamp(5rem, 20vw, 18rem)' }}
-        >
-          {profile.name}.
-        </p>
-      </div>
-
-      {/* Copyright sutil */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mt-12 font-mono text-2xs uppercase tracking-widest text-neutral-500">
-        <span>© {new Date().getFullYear()} {profile.name}. All rights reserved.</span>
-        <span>Designed &amp; built with care · v1.0</span>
-      </div>
+      </motion.div>
     </footer>
-  );
-}
-
-function LocalTime() {
-  const [time, setTime] = useState('');
-
-  if (typeof window !== 'undefined' && !time) {
-    const update = () => {
-      const t = new Date().toLocaleTimeString('en-GB', {
-        timeZone: 'Europe/Lisbon',
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-      setTime(t);
-    };
-    update();
-    setInterval(update, 30000);
-  }
-
-  return <div className="font-sans text-md">{time || '—'} · Lisbon</div>;
-}
-
-function CopyIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="9" y="9" width="13" height="13" rx="2" />
-      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-    </svg>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
   );
 }
