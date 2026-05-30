@@ -26,7 +26,7 @@ const STICKERS = [
 
 export function About() {
   return (
-    <section id="about" className="about-section">
+    <section id="about" className="about-section" data-nav-theme="lime">
       {/* Stickers flotando */}
       {STICKERS.map((s) => (
         <div key={s.cls} className={`sticker sticker--${s.cls}`}>
