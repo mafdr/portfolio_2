@@ -18,7 +18,8 @@ export function SelectedWork() {
   return (
     <section
       id="work"
-      className="px-6 md:px-8 lg:px-12 py-20 md:py-32 border-t border-border-subtle"
+      data-nav-theme="light"
+      className="bg-bg px-6 md:px-8 lg:px-12 py-20 md:py-32 border-t border-border-subtle"
     >
       {/* Título centrado con jerarquía */}
       <motion.h2
@@ -32,7 +33,7 @@ export function SelectedWork() {
           style={{ fontSize: 'clamp(2.5rem, 6vw, 5.5rem)' }}>
           Projects
         </span>
-        <span className="block font-serif italic text-fg-muted leading-tight"
+        <span className="block font-sans font-normal text-fg-muted leading-tight"
           style={{ fontSize: 'clamp(1rem, 2vw, 1.8rem)', marginTop: 4 }}>
           that I&apos;m proud of
         </span>
