@@ -11,9 +11,6 @@ import { NavFloating } from '@/components/sections/nav-floating';
  * Efecto "cortina" (sticky stack) en dos transiciones:
  * 1. Hero → SelectedWork: el Hero queda sticky detrás y SelectedWork sube y lo tapa.
  * 2. (Work+Marquee) → About: quedan sticky detrás y About sube y los tapa.
- *
- * Cada bloque "cubierto" va en un wrapper sticky (top:0, z-index bajo).
- * El bloque que cubre tiene fondo sólido y z-index mayor.
  */
 export default function HomePage() {
   return (
@@ -25,14 +22,18 @@ export default function HomePage() {
           <Hero />
         </div>
 
-        {/* Bloque 2: SelectedWork+Marquee — cubre el Hero Y queda sticky para que About lo cubra */}
+        {/* Bloque 2: SelectedWork — cubre el Hero y queda sticky */}
         <div className="stack-sticky stack-cover" style={{ zIndex: 2 }}>
           <SelectedWork />
+        </div>
+
+        {/* Bloque 3: ClientMarquee — cubre SelectedWork y queda sticky para que About lo cubra */}
+        <div className="stack-sticky stack-cover" style={{ zIndex: 3 }}>
           <ClientMarquee />
         </div>
 
-        {/* Bloque 3: About — sube y cubre Work+Marquee */}
-        <div className="stack-cover" style={{ zIndex: 3 }}>
+        {/* Bloque 4: About — sube y cubre Marquee */}
+        <div className="stack-cover" style={{ zIndex: 4 }}>
           <About />
         </div>
       </main>
