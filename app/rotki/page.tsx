@@ -123,6 +123,122 @@ export default function RotkiPage() {
           .rk-back svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; transition: transform 250ms ease; }
           .rk-back:hover svg { transform: translateX(-3px); }
 
+          /* EXEC SUMMARY */
+          .rk-exec-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-bottom: 1px solid rgba(240,242,233,0.08);
+            background: #0a0a0a;
+          }
+          .rk-exec-col {
+            padding: 56px 48px;
+            border-right: 1px solid rgba(240,242,233,0.08);
+          }
+          .rk-exec-col:last-child { border-right: none; }
+          .rk-exec-tag {
+            font-family: var(--font-geist-mono, 'Geist Mono', monospace);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            color: rgba(240,242,233,0.4);
+          }
+          .rk-exec-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+          .rk-exec-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: rgba(240,242,233,0.7);
+            margin-bottom: 24px;
+          }
+          .rk-exec-kpis { display: flex; gap: 20px; flex-wrap: wrap; }
+          .rk-exec-kpi { display: flex; flex-direction: column; gap: 2px; }
+          .rk-exec-kpi-num {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 28px;
+            color: #d3fa53;
+            letter-spacing: -0.02em;
+          }
+          .rk-exec-kpi-label {
+            font-family: var(--font-geist-mono, 'Geist Mono', monospace);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(240,242,233,0.4);
+            max-width: 90px;
+            line-height: 1.3;
+          }
+
+          /* ITERATION CALLOUT */
+          .rk-iteration {
+            margin: 64px 0;
+            border-radius: 8px;
+            border: 1px solid rgba(240,242,233,0.1);
+            overflow: hidden;
+            background: #0a0a0a;
+          }
+          .rk-iteration-header {
+            padding: 28px 40px;
+            background: rgba(240,242,233,0.03);
+            border-bottom: 1px solid rgba(240,242,233,0.08);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+          }
+          .rk-iteration-header svg { width: 18px; height: 18px; stroke: #d3fa53; fill: none; stroke-width: 2; flex-shrink: 0; }
+          .rk-iteration-header-text {
+            font-family: var(--font-geist-mono, 'Geist Mono', monospace);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: rgba(240,242,233,0.6);
+          }
+          .rk-iteration-body {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+          }
+          .rk-iteration-step { padding: 36px 40px; }
+          .rk-iteration-step-label {
+            font-family: var(--font-geist-mono, 'Geist Mono', monospace);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            margin-bottom: 14px;
+          }
+          .rk-iteration-step--before .rk-iteration-step-label { color: rgba(239,68,68,0.7); }
+          .rk-iteration-step--after .rk-iteration-step-label { color: #d3fa53; }
+          .rk-iteration-step-text { font-size: 14px; line-height: 1.6; color: rgba(240,242,233,0.8); }
+          .rk-iteration-arrow {
+            padding: 0 8px;
+            color: rgba(240,242,233,0.25);
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          /* TENSION ICONS */
+          .rk-tension-icon {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 20px;
+            stroke: #d3fa53;
+            fill: none;
+            stroke-width: 1.4;
+            opacity: 0.85;
+          }
+          .rk-tension-col--friction .rk-tension-icon { stroke: #ef4444; }
+
+          @media (max-width: 900px) {
+            .rk-exec-summary { grid-template-columns: 1fr; }
+            .rk-exec-col { border-right: none; border-bottom: 1px solid rgba(240,242,233,0.08); padding: 40px 32px; }
+            .rk-iteration-body { grid-template-columns: 1fr; }
+            .rk-iteration-arrow { padding: 8px 40px; justify-content: flex-start; transform: rotate(90deg); transform-origin: left; }
+          }
+
           .rk-eyebrow {
             font-family: var(--font-geist-mono, 'Geist Mono', monospace);
             font-size: 11px;
@@ -449,12 +565,25 @@ export default function RotkiPage() {
           .rk-flow-step:last-child { border-bottom: none; }
           .rk-flow-num {
             font-family: var(--font-geist-mono, 'Geist Mono', monospace);
-            font-size: 11px;
-            min-width: 28px;
-            padding-top: 2px;
+            font-size: 10px;
+            min-width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
           }
-          .rk-flow-col--before .rk-flow-num { color: rgba(240,242,233,0.3); }
-          .rk-flow-col--after .rk-flow-num { color: #d3fa53; opacity: 0.7; }
+          .rk-flow-col--before .rk-flow-num {
+            color: rgba(240,242,233,0.4);
+            border: 1px solid rgba(240,242,233,0.15);
+            background: rgba(240,242,233,0.03);
+          }
+          .rk-flow-col--after .rk-flow-num {
+            color: #d3fa53;
+            border: 1px solid rgba(211,250,83,0.3);
+            background: rgba(211,250,83,0.06);
+          }
           .rk-flow-text { font-size: 13px; line-height: 1.5; }
           .rk-flow-col--before .rk-flow-text { color: rgba(240,242,233,0.6); }
           .rk-flow-col--after .rk-flow-text { color: rgba(240,242,233,0.8); }
@@ -704,7 +833,7 @@ export default function RotkiPage() {
           </div>
 
           <div className="rk-cover rk-reveal rk-d4">
-            <div className="rk-placeholder" style={{ aspectRatio: '16/7', padding: '48px' }}>
+            <div className="rk-placeholder" style={{ aspectRatio: '16/5.5', padding: '32px' }}>
               <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               Cover image — Rotki_cover_Homepage.png
             </div>
@@ -724,6 +853,44 @@ export default function RotkiPage() {
                 <div className="rk-meta-value">{item.value}</div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* ── EXEC SUMMARY — Problem / Approach / Result ── */}
+        <section className="rk-exec-summary" data-nav-theme="dark">
+          <div className="rk-exec-col rk-reveal">
+            <div className="rk-exec-tag"><span className="rk-exec-dot" style={{ background: '#ef4444' }} />Problem</div>
+            <div className="rk-exec-text">Onboarding asked for trust before earning it. Users hit API key setup and RPC configuration before seeing a single real screen — and left.</div>
+            <div className="rk-exec-kpis">
+              <div className="rk-exec-kpi">
+                <div className="rk-exec-kpi-num">41%</div>
+                <div className="rk-exec-kpi-label">Drop-off at step 3</div>
+              </div>
+            </div>
+          </div>
+          <div className="rk-exec-col rk-reveal rk-d1">
+            <div className="rk-exec-tag"><span className="rk-exec-dot" style={{ background: '#d3fa53' }} />Approach</div>
+            <div className="rk-exec-text">Shadowing revealed the real friction was cognitive load at step 3 — not the steps before or after it. Redesigned the flow so the dashboard opens right after that step.</div>
+            <div className="rk-exec-kpis">
+              <div className="rk-exec-kpi">
+                <div className="rk-exec-kpi-num">3mo</div>
+                <div className="rk-exec-kpi-label">Discovery to ship</div>
+              </div>
+            </div>
+          </div>
+          <div className="rk-exec-col rk-reveal rk-d2">
+            <div className="rk-exec-tag"><span className="rk-exec-dot" style={{ background: '#d3fa53' }} />Result</div>
+            <div className="rk-exec-text">Drop-off dropped, dashboard activation rose, and support tickets about onboarding fell — without removing any of the product&apos;s privacy guarantees.</div>
+            <div className="rk-exec-kpis">
+              <div className="rk-exec-kpi">
+                <div className="rk-exec-kpi-num">-45%</div>
+                <div className="rk-exec-kpi-label">Drop-off</div>
+              </div>
+              <div className="rk-exec-kpi">
+                <div className="rk-exec-kpi-num">+50%</div>
+                <div className="rk-exec-kpi-label">Activation</div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -750,7 +917,7 @@ export default function RotkiPage() {
           </div>
 
           <div className="rk-img-wrap rk-reveal">
-            <div className="rk-placeholder" style={{ aspectRatio: '16/9', padding: '64px' }}>
+            <div className="rk-placeholder" style={{ aspectRatio: '16/6', padding: '40px' }}>
               <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               imagem_2.png — Discovery & research phase
             </div>
@@ -762,9 +929,27 @@ export default function RotkiPage() {
             Discovery focused on understanding how privacy-conscious crypto investors experience onboarding — and where trust breaks down before they see any value.
           </p>
           <div className="rk-methods rk-reveal rk-d2">
-            {['Community surveys', 'User interviews', 'Persona profiles', 'Onboarding audit', 'Competitor analysis'].map((m) => (
+            {['Community surveys', 'User interviews', 'Persona profiles', 'Onboarding audit', 'Competitor analysis', 'Shadowing sessions'].map((m) => (
               <div className="rk-pill" key={m}>{m}</div>
             ))}
+          </div>
+
+          <div className="rk-iteration rk-reveal">
+            <div className="rk-iteration-header">
+              <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9" /><path d="M3 4v8h8" /></svg>
+              <div className="rk-iteration-header-text">Course correction — shadowing changed the plan</div>
+            </div>
+            <div className="rk-iteration-body">
+              <div className="rk-iteration-step rk-iteration-step--before">
+                <div className="rk-iteration-step-label">What I had planned</div>
+                <div className="rk-iteration-step-text">Wireframes for a 6-step onboarding were already underway — surveys and interviews suggested the main problem was step count and API friction.</div>
+              </div>
+              <div className="rk-iteration-arrow">→</div>
+              <div className="rk-iteration-step rk-iteration-step--after">
+                <div className="rk-iteration-step-label">What shadowing revealed</div>
+                <div className="rk-iteration-step-text">Watching real sessions showed the issue wasn&apos;t step count — it was cognitive overload at step 3 specifically. Users weren&apos;t confused by the number of steps; they froze at one. That meant going back into wireframes already in progress and redesigning the flow so the dashboard opens immediately after step 3, instead of after step 6.</div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -810,7 +995,7 @@ export default function RotkiPage() {
           </div>
 
           <div className="rk-img-wrap rk-reveal" style={{ marginTop: '64px' }}>
-            <div className="rk-placeholder" style={{ aspectRatio: '16/9', padding: '64px' }}>
+            <div className="rk-placeholder" style={{ aspectRatio: '16/6', padding: '40px' }}>
               <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               imagem_3.png — Persona profile
             </div>
@@ -827,6 +1012,7 @@ export default function RotkiPage() {
 
           <div className="rk-tension rk-reveal rk-d3">
             <div className="rk-tension-col">
+              <svg className="rk-tension-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2" /><path d="M7 11V7a5 5 0 0110 0v4" /></svg>
               <div className="rk-tension-col-title">
                 <span className="rk-tension-dot" style={{ background: 'rgba(240,242,233,0.4)' }} />
                 What the product needed
@@ -839,6 +1025,7 @@ export default function RotkiPage() {
               </ul>
             </div>
             <div className="rk-tension-col">
+              <svg className="rk-tension-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" /></svg>
               <div className="rk-tension-col-title">
                 <span className="rk-tension-dot" style={{ background: 'rgba(240,242,233,0.4)' }} />
                 What the user wanted
@@ -851,6 +1038,7 @@ export default function RotkiPage() {
               </ul>
             </div>
             <div className="rk-tension-col rk-tension-col--friction">
+              <svg className="rk-tension-icon" viewBox="0 0 24 24"><path d="M12 9v4" /><path d="M12 17h.01" /><path d="M10.3 3.9L2.5 17a2 2 0 001.7 3h15.6a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" /></svg>
               <div className="rk-tension-col-title">
                 <span className="rk-tension-dot" style={{ background: '#ef4444' }} />
                 This created friction
@@ -972,7 +1160,7 @@ export default function RotkiPage() {
           </p>
 
           <div className="rk-img-wrap rk-reveal rk-d3">
-            <div className="rk-placeholder" style={{ aspectRatio: '16/9', padding: '64px' }}>
+            <div className="rk-placeholder" style={{ aspectRatio: '16/6', padding: '40px' }}>
               <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               final_2.png — Hi-res wireframes
             </div>
@@ -980,7 +1168,7 @@ export default function RotkiPage() {
           </div>
 
           <div className="rk-img-wrap rk-reveal">
-            <div className="rk-placeholder" style={{ aspectRatio: '16/9', padding: '64px' }}>
+            <div className="rk-placeholder" style={{ aspectRatio: '16/6', padding: '40px' }}>
               <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               final_1.png — Final prototypes
             </div>
@@ -1007,7 +1195,7 @@ export default function RotkiPage() {
           </div>
 
           <div className="rk-img-wrap rk-reveal" style={{ marginTop: '64px' }}>
-            <div className="rk-placeholder" style={{ aspectRatio: '16/9', padding: '64px' }}>
+            <div className="rk-placeholder" style={{ aspectRatio: '16/6', padding: '40px' }}>
               <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               wall.png — Results visualization
             </div>
@@ -1025,7 +1213,7 @@ export default function RotkiPage() {
           </p>
 
           <div className="rk-img-wrap rk-reveal rk-d3">
-            <div className="rk-placeholder" style={{ aspectRatio: '16/9', padding: '64px' }}>
+            <div className="rk-placeholder" style={{ aspectRatio: '16/6', padding: '40px' }}>
               <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               imagem_4.png — Takeaways
             </div>
