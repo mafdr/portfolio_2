@@ -815,7 +815,7 @@ export default function RotkiPage() {
         `}</style>
 
         {/* ── HERO ── */}
-        <section className="rk-hero rk-hero" data-nav-theme="dark">
+        <section className="rk-hero rk-hero" data-nav-theme="dark" data-cursor-theme="dark">
           <Link href="/" className="rk-back rk-reveal">
             <svg viewBox="0 0 14 14"><path d="M9 2L4 7L9 12"/></svg>
             Back
@@ -857,7 +857,7 @@ export default function RotkiPage() {
         </section>
 
         {/* ── EXEC SUMMARY — Problem / Approach / Result ── */}
-        <section className="rk-exec-summary" data-nav-theme="dark">
+        <section className="rk-exec-summary" data-nav-theme="dark" data-cursor-theme="dark">
           <div className="rk-exec-col rk-reveal">
             <div className="rk-exec-tag"><span className="rk-exec-dot" style={{ background: '#ef4444' }} />Problem</div>
             <div className="rk-exec-text">Onboarding asked for trust before earning it. Users hit API key setup and RPC configuration before seeing a single real screen — and left.</div>
@@ -1003,7 +1003,7 @@ export default function RotkiPage() {
         </section>
 
         {/* ── 03 STRUCTURAL TENSION ── */}
-        <section className="rk-section rk-section--dark" data-nav-theme="dark">
+        <section className="rk-section rk-section--dark" data-nav-theme="dark" data-cursor-theme="dark">
           <div className="rk-label rk-reveal">03 — Structural Tension</div>
           <h2 className="rk-title rk-reveal rk-d1">The core tension<br />wasn&apos;t usability.</h2>
           <p className="rk-body rk-reveal rk-d2">
@@ -1053,7 +1053,7 @@ export default function RotkiPage() {
         </section>
 
         {/* ── 04 USER FLOWS ── */}
-        <section className="rk-section rk-section--dark" style={{ paddingTop: 0 }} data-nav-theme="dark">
+        <section className="rk-section rk-section--dark" style={{ paddingTop: 0 }} data-nav-theme="dark" data-cursor-theme="dark">
           <div className="rk-label rk-reveal">04 — User Flows</div>
           <h2 className="rk-title rk-reveal rk-d1">Setup-first<br />to value-first.</h2>
           <p className="rk-body rk-reveal rk-d2">
@@ -1177,7 +1177,7 @@ export default function RotkiPage() {
         </section>
 
         {/* ── 06 RESULTS ── */}
-        <section className="rk-section rk-section--dark" data-nav-theme="dark">
+        <section className="rk-section rk-section--dark" data-nav-theme="dark" data-cursor-theme="dark">
           <div className="rk-label rk-reveal">06 — Results</div>
           <h2 className="rk-title rk-reveal rk-d1">Fewer steps.<br />Clearer promise.</h2>
 
