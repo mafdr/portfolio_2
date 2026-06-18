@@ -1,6 +1,6 @@
 'use client';
-
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Logo } from '@/components/ui/logo';
 
 /**
@@ -12,17 +12,20 @@ import { Logo } from '@/components/ui/logo';
  *  - 'light' → texto negro, menú con fondo oscuro translúcido (work, marquee)
  *  - 'dark'  → texto cream/lime (contact)
  *
- * Detecta la sección mirando qué elemento [data-nav-theme] cruza la línea
- * superior del viewport.
- *
- * El menú tiene un indicador deslizante + hover dinámico (cada item sube
- * con un pequeño rebote).
+ * En páginas de proyecto (/work/...) el primer item del menú cambia
+ * de "Work" a "Home" y enlaza a la homepage.
  */
 
-const NAV_ITEMS = [
-  { label: 'Work', href: '#work' },
-  { label: 'About', href: '#about' },
+const HOME_ITEMS = [
+  { label: 'Work',    href: '#work' },
+  { label: 'About',   href: '#about' },
   { label: 'Contact', href: '#contact' },
+];
+
+const PROJECT_ITEMS = [
+  { label: 'Home',    href: '/' },
+  { label: 'About',   href: '/#about' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 type Theme = 'lime' | 'light' | 'dark';
@@ -31,6 +34,10 @@ export function NavFloating() {
   const [theme, setTheme] = useState<Theme>('lime');
   const menuRef = useRef<HTMLElement>(null);
   const indicatorRef = useRef<HTMLSpanElement>(null);
+  const pathname = usePathname();
+
+  const isProject = pathname.startsWith('/work/');
+  const NAV_ITEMS = isProject ? PROJECT_ITEMS : HOME_ITEMS;
 
   useEffect(() => {
     const zones = Array.from(
@@ -39,7 +46,6 @@ export function NavFloating() {
     if (!zones.length) return;
 
     function onScroll() {
-      // La sección cuyo top está por encima de 80px y su bottom por debajo
       const probe = 80;
       let current: Theme = 'lime';
       for (const z of zones) {
@@ -71,6 +77,7 @@ export function NavFloating() {
     indicator.style.width = `${linkRect.width}px`;
     indicator.style.opacity = '1';
   }
+
   function hideIndicator() {
     const indicator = indicatorRef.current;
     if (indicator) indicator.style.opacity = '0';
@@ -78,11 +85,10 @@ export function NavFloating() {
 
   return (
     <header className={`nav-float nav-float--${theme}`}>
-      <a href="#top" className="nav-float__brand" data-cursor="hover">
+      <a href="/" className="nav-float__brand" data-cursor="hover">
         <Logo size={40} />
         <span>Manuel Reis</span>
       </a>
-
       <nav className="nav-float__menu" ref={menuRef} onMouseLeave={hideIndicator}>
         <span className="nav-float__indicator" ref={indicatorRef} />
         {NAV_ITEMS.map((item) => (
