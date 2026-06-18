@@ -268,7 +268,7 @@ export default function HumanlyPage() {
         `}</style>
 
         {/* ── HERO ── */}
-        <section className="hy-hero" data-nav-theme="dark">
+        <section className="hy-hero" data-nav-theme="dark" data-cursor-theme="dark">
           <Link href="/" className="hy-back hy-reveal">
             <svg viewBox="0 0 14 14"><path d="M9 2L4 7L9 12" /></svg>
             Back
@@ -303,7 +303,7 @@ export default function HumanlyPage() {
         </section>
 
         {/* ── EXEC SUMMARY ── */}
-        <section className="hy-exec-summary" data-nav-theme="dark">
+        <section className="hy-exec-summary" data-nav-theme="dark" data-cursor-theme="dark">
           <div className="hy-exec-col hy-reveal">
             <div className="hy-exec-tag"><span className="hy-exec-dot" style={{ background: '#ef4444' }} />Problem</div>
             <div className="hy-exec-text">HR tasks were scattered across tools and spreadsheets. Employees had no visibility over basic actions like time-off or payments — and HR was constantly firefighting avoidable requests.</div>
@@ -438,7 +438,7 @@ export default function HumanlyPage() {
         </section>
 
         {/* ── 04 STRUCTURAL TENSION ── */}
-        <section className="hy-section hy-section--dark" data-nav-theme="dark">
+        <section className="hy-section hy-section--dark" data-nav-theme="dark" data-cursor-theme="dark">
           <div className="hy-label hy-reveal">04 — Structural Tension</div>
           <h2 className="hy-sec-title hy-reveal hy-d1">The core tension<br />was control vs autonomy.</h2>
           <p className="hy-body hy-reveal hy-d2">The more control HR added, the more complex the flows became. The simpler the experience for employees, the less visibility HR felt they had. The challenge wasn&apos;t just simplifying screens — it was designing a system where autonomy didn&apos;t compromise accuracy.</p>
@@ -487,7 +487,7 @@ export default function HumanlyPage() {
         </section>
 
         {/* ── 05 USER FLOWS & IA ── */}
-        <section className="hy-section hy-section--dark" style={{ paddingTop: 0 }} data-nav-theme="dark">
+        <section className="hy-section hy-section--dark" style={{ paddingTop: 0 }} data-nav-theme="dark" data-cursor-theme="dark">
           <div className="hy-label hy-reveal">05 — User Flows & IA</div>
           <h2 className="hy-sec-title hy-reveal hy-d1">If it can be<br />misunderstood, it will be.</h2>
           <p className="hy-body hy-reveal hy-d2">Key flows were designed to reduce steps, prevent errors and remove unnecessary decisions. Every flow was validated against the full employee journey to ensure consistency across touchpoints.</p>
@@ -556,7 +556,7 @@ export default function HumanlyPage() {
         </section>
 
         {/* ── 07 UI DESIGN ── */}
-        <section className="hy-section hy-section--dark" data-nav-theme="dark">
+        <section className="hy-section hy-section--dark" data-nav-theme="dark" data-cursor-theme="dark">
           <div className="hy-label hy-reveal">07 — UI Design</div>
           <h2 className="hy-sec-title hy-reveal hy-d1">Calm. Predictable.<br />Built for daily use.</h2>
           <p className="hy-body hy-reveal hy-d2">The interface was designed to feel consistent and efficient across repeated daily use — not impressive at first glance, but invisible after a week. Every component was built around the tasks people actually do, not the features the product could offer.</p>
@@ -579,7 +579,7 @@ export default function HumanlyPage() {
         </section>
 
         {/* ── 08 RESULTS ── */}
-        <section className="hy-section hy-section--dark" style={{ paddingTop: 0 }} data-nav-theme="dark">
+        <section className="hy-section hy-section--dark" style={{ paddingTop: 0 }} data-nav-theme="dark" data-cursor-theme="dark">
           <div className="hy-label hy-reveal">08 — Results</div>
           <h2 className="hy-sec-title hy-reveal hy-d1">Less friction.<br />More time for real work.</h2>
 
